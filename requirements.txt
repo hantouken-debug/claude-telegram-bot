@@ -1,0 +1,4 @@
+anthropic
+pyTelegramBotAPI
+flask
+gunicorn
