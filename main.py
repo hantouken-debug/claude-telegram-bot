@@ -24,13 +24,17 @@ def webhook():
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     user_text = message.text
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1024,
-        messages=[{"role": "user", "content": user_text}]
-    )
-    reply = response.content[0].text
-    bot.reply_to(message, reply)
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": user_text}]
+        )
+        reply = response.content[0].text
+        bot.reply_to(message, reply)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        bot.reply_to(message, f"エラーが発生しました: {str(e)}")
 
 @app.route("/")
 def index():
